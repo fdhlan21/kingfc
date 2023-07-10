@@ -1,0 +1,9 @@
+{
+    "name": "webadmin/flyincloud-composer",
+    "description": "bismmillah",
+    "type": "project",
+    "license": "GPL",
+    "require": {
+        "kreait/firebase-php": "^5.0"
+    }
+}
