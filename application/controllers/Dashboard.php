@@ -14,13 +14,13 @@ class Dashboard extends CI_Controller
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/index', $data);
+            $this->load->view('page/dashboard/index', $data);
             $this->load->view('templates/footer');
         } elseif ($data['admin']['role_id'] == 2) {
             // Jika role_id adalah 2 (user), tampilkan view user
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/index', $data);
+            $this->load->view('page/dashboard/index', $data);
             $this->load->view('templates/footer');
         } else {
             // Jika role_id tidak valid, tampilkan pesan error

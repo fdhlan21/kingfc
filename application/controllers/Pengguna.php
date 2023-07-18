@@ -14,13 +14,13 @@ class Pengguna extends CI_Controller
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/pengguna', $data);
+            $this->load->view('page/pengguna/pengguna', $data);
             $this->load->view('templates/footer');  
         } elseif ($data['admin']['role_id'] == 2) {
             // Jika role_id adalah 2 (user), tampilkan view user
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/pengguna', $data);
+            $this->load->view('page/pengguna/pengguna', $data);
             $this->load->view('templates/footer');
         } else {
             // Jika role_id tidak valid, tampilkan pesan error
@@ -29,5 +29,17 @@ class Pengguna extends CI_Controller
             $this->load->view('admin/error', $data);
             $this->load->view('templates/footer');
         }
+    }
+
+    function ubah() {
+        $data['title'] = 'BESTI - Ubah Data Pengguna';
+        $data['admin'] = $this->db->get_where('admin', ['username' =>
+        $this->session->userdata('username')])->row_array();
+
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/ubah-pengguna', $data);
+        $this->load->view('templates/footer');
     }
 }
