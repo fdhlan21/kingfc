@@ -4,6 +4,8 @@
     "type": "project",
     "license": "GPL",
     "require": {
-        "kreait/firebase-php": "^5.0"
+        "dompdf/dompdf": "^2.0",
+        "tecnickcom/tcpdf": "^6.6",
+        "setasign/fpdf": "^1.8"
     }
 }

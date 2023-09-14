@@ -29,7 +29,7 @@ $stmt = $pdo->query($query);
 // Fetch data baris per baris
 while ($row = $stmt->fetch()) {
     // Ambil nilai kolom yang diinginkan
-    $color1 = $row['color1'];
+    $color = $row['color2'];
 
     // Lakukan sesuatu dengan nilai yang diambil
     // ...
@@ -46,14 +46,14 @@ $pdo = null;
             <li class="breadcrumb-item">
                 <a href="<?= base_url('dashboard'); ?>" style="color: black;">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Siswa</li>
+            <li class="breadcrumb-item active" aria-current="page">Transaksi</li>
         </ol>
     </nav>
 
     <div class="card">
         <div class="card-header" style="display: flex; gap: 12px;">
             <a href="<?= base_url('dashboard'); ?>"><button type="button" class="btn btn-outline-secondary" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">Kembali</button></a>
-            <a href="<?= base_url('pengguna/add'); ?>"><button type="button" class="btn btn-outline-success" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">Tambah</button></a>
+            <a href="<?= base_url('transaksi/add'); ?>"><button type="button" class="btn btn-outline-success" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">Tambah</button></a>
         </div>
 
         <div class=" card-body">
@@ -62,12 +62,13 @@ $pdo = null;
                     <div class="col-sm-12">
                         <table class="table table-bordered table-striped table-hover tabza dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                             <thead>
-                                <tr class="" style="color:white; background-color: <?= $color1 ?>;" role="row">
+                                <tr class="" style="color:white; background-color: <?= $color ?>;" role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 21.3281px;">No</th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Nama: activate to sort column ascending">NIS</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Alamat: activate to sort column ascending">Nama</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Kelas</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Tanggal</th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Keterangan</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Jumlah</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Status</th>
                                     <?php if ($admin['role_id'] == 1) { ?>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
                                     <?php } ?>
@@ -90,16 +91,23 @@ $pdo = null;
                                     die("Koneksi ke database gagal: " . mysqli_connect_error());
                                 }
 
+
+
                                 $no = 1;
-                                $query = "SELECT * FROM siswa ORDER BY id ASC";
+                                $query = "SELECT * FROM transaksi ORDER BY id ASC";
                                 $result = mysqli_query($koneksi, $query);
 
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $id = $row['id'];
                                     $nis = $row['nis'];
-                                    $nama = $row['nama'];
-                                    $kelas = $row['kelas'];
+                                    $timestamp = $row['tanggal']; // Mengambil timestamp Unix dari database
+                                    $tanggal = date(
+                                        "d M Y",
+                                        $timestamp
+                                    ); // Mengonversi ke format yang sesuai
                                     $keterangan = $row['keterangan'];
+                                    $jumlah = $row['jumlah'];
+                                    $status = $row['status'];
 
 
 
@@ -107,19 +115,17 @@ $pdo = null;
                                     echo "<tr>";
                                     echo "<td>$no</td>";
                                     echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$nis</p></td>";
-                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$nama</p></td>";
-                                    echo "<td  style='color: black; font-family:'Poppins', sans-serif;'>$kelas</td>";
-                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$keterangan</p></td>";
-
-
+                                    echo "<td  style='color: black; font-family:'Poppins', sans-serif;'>$tanggal</td>";
+                                    echo "<td style='display: flex; flex-direction: column; align-items: flex-start;'><p style='color: black; font-family: 'Poppins', sans-serif; margin: 0px'>$keterangan</p></td>";
+                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$jumlah</p></td>";
+                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$status</p></td>";
                                     if ($admin['role_id'] == 1) {
                                         echo "<td>
-                                                        <a href=\"javascript:void(0);\" onclick=\"confirmDelete('$id');\" class='btn btn-outline-danger' style='margin-left: 10px;'><i class='fas fa-fw fa-trash'></i></a>
-                <a href='pengguna/ubah?id=$id' class='btn btn-outline-success' style='margin-left: 10px;'><i class='fas fa-user-edit'></i></a>
-            </td>";
+                                            <a href=\"javascript:void(0);\" onclick=\"confirmDelete('$id');\" class='btn btn-outline-danger' style='margin-left: 10px;'><i class='fas fa-fw fa-trash'></i></a>
+                                            <a href='transaksi/ubah?id=$id' class='btn btn-outline-success' style='margin-left: 10px;'><i class='fas fa-user-edit'></i></a>
+                                            <a href='transaksi/info/?id=$id&action=cetak' class='btn btn-outline-primary' style='margin-left: 10px;'><i class='fas fa-print'></i></a>
+                                            </td>";
                                     }
-
-                                    echo "</tr>";
 
                                     $no++;
                                 }
@@ -145,9 +151,9 @@ $pdo = null;
                         }
 
                         if (isset($_GET['hapus']) && $admin['role_id'] == 1) {
-                            mysqli_query($koneksi, "DELETE FROM siswa WHERE id='$_GET[hapus]'");
+                            mysqli_query($koneksi, "DELETE FROM transaksi WHERE id='$_GET[hapus]'");
                             echo "<p style='color: black; font-size:15px;'>Data Terhapus</p>";
-                            echo "<meta http-equiv=refresh content=2;URL='pengguna'>";
+                            echo "<meta http-equiv=refresh content=2;URL='transaksi'>";
                         }
 
                         ?>

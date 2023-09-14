@@ -11,13 +11,17 @@ class Api extends CI_Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $nama = $data['nama'];
-        $tempat = $data['tempat'];
-        $tanggallahir = $data['tanggallahir'];
-        //cek 
-    
-            $sql = "INSERT INTO pengguna(nama,tempat,tanggallahir) VALUES('$nama','$tempat','$tanggallahir')";
-            $this->db->query($sql);
+ $sql = [
+
+    'nama' => $data['nama'],
+    'tempat' => $data['tempat'],
+    'tanggallahir' => $data['tanggallahir'],
+    'tanggal' => date('d/'),
+    'bulan' => date('/'),
+    'tahun' => date('Y/'),
+
+ ];
+            $this->db->insert('pengguna',$sql);
             if ($sql) {
                 echo 212;
             } else {
@@ -88,11 +92,14 @@ class Api extends CI_Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $nik = $data['nik'];
-        $nama_sekolah = $data['nama_sekolah'];
-        $nama_desa =    $data['nama_desa'];
-        // $image_uri = $data['image_uri'];
-        //cek 
+
+
+    $nik = $data['nik'];
+    $nama_sekolah = $data['nama_sekolah'];
+    $nama_desa =    $data['nama_desa'];
+
+
+
 
 
         $SQL = "SELECT * FROM konselingremaja WHERE nik='$nik'";
@@ -103,9 +110,18 @@ class Api extends CI_Controller
             echo json_encode(($user));
             echo "NIK SUDAH TERDAFTAR'";
         } else {
-            $sql = "INSERT INTO konselingremaja(nik,nama_sekolah,nama_desa) VALUES('$nik','$nama_sekolah','$nama_desa')";
-            $this->db->query($sql);
+            $sql = [
+                'nik' =>  $data['nik'],
+                'nama_sekolah' => $data['nama_sekolah'],
+                'nama_desa' => $data['nama_desa'],
+                'tanggal' => date('d/'),
+                'bulan' => date('m/'),
+                'tahun' => date('Y/'),
+            ];
+            $this->db->insert('konselingremaja',$sql);
+            // $this->db->insert('konselingremaja', $data1);
             if ($sql) {
+               
                 echo 200;
             } else {
                 echo 505;
@@ -116,7 +132,14 @@ class Api extends CI_Controller
 
     function slider()
     {
-        $koneksi = mysqli_connect("localhost", "root", "", "bestiedatabase");
+        include(APPPATH . 'config/database.php');
+        $host = $db['default']['hostname'];
+        $dbname   = $db['default']['database'];
+        $username = $db['default']['username'];
+        $password = $db['default']['password'];
+
+        $koneksi = mysqli_connect($host, $username, $password, $dbname);
+
 
 
         // Mendapatkan data gambar slider dari database
@@ -129,7 +152,7 @@ class Api extends CI_Controller
         // Mengambil data gambar slider dari hasil query dan menambahkannya ke array
         while ($row = mysqli_fetch_assoc($result)) {
             $sliderImages[] = array(
-                'url' => 'http://192.168.1.18/bestie/path/assets/img/slider/' . $row['nama'],// Ganti dengan URL gambar sesuai dengan direktori di server Anda
+                'url' => 'http://10.255.5.229/besti/assets/img/slider/' . $row['nama'],// Ganti dengan URL gambar sesuai dengan direktori di server Anda
                 'keterangan' => $row['keterangan']
             );
         }

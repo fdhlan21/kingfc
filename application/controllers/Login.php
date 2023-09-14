@@ -19,7 +19,7 @@ class login extends CI_Controller
 
             $data['title'] = 'Login Page';
             $this->load->view('templates/login_header', $data);
-            $this->load->view('admin/login');
+            $this->load->view('page/logindanregister/login');
             $this->load->view('templates/login_footer');
         } else {
 
@@ -92,7 +92,7 @@ class login extends CI_Controller
 
             $data['title'] = 'Admin MAOS Register';
             $this->load->view('templates/login_header', $data);
-            $this->load->view('admin/register');
+            $this->load->view('page/logindanregister/register');
             $this->load->view('templates/login_footer');
         } else {
 

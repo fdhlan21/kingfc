@@ -13,14 +13,14 @@ class KonselingRemaja extends CI_Controller
         if ($data['admin']['role_id'] == 1) {
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/konselingremaja', $data);
+            $this->load->view('topbar', $data);
+            $this->load->view('page/konselingremaja/konselingremaja', $data);
             $this->load->view('templates/footer');
         } elseif ($data['admin']['role_id'] == 2) {
             // Jika role_id adalah 2 (user), tampilkan view user
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/konselingremaja', $data);
+            $this->load->view('topbar', $data);
+            $this->load->view('admin/konselingremaja/kosnelingremaja', $data);
             $this->load->view('templates/footer');
         } else {
             // Jika role_id tidak valid, tampilkan pesan error

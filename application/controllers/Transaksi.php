@@ -1,17 +1,22 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+// require_once APPPATH . 'third_party/tcpdf/tcpdf.php';
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
-class Pengguna extends CI_Controller
+
+class Transaksi extends CI_Controller
 {
 
 
-	function __construct(){
+    function __construct()
+    {
 
-		parent::__construct();
+        parent::__construct();
     }
     public function index()
     {
-        $data['title'] = 'SPP - Siswa';
+        $data['title'] = 'SPP - Transaksi';
         $data['admin'] = $this->db->get_where('admin', ['username' =>
         $this->session->userdata('username')])->row_array();
 
@@ -20,13 +25,13 @@ class Pengguna extends CI_Controller
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
             $this->load->view('topbar', $data);
-            $this->load->view('page/pengguna/pengguna', $data);
-            $this->load->view('templates/footer');  
+            $this->load->view('page/transaksi/transaksi', $data);
+            $this->load->view('templates/footer');
         } elseif ($data['admin']['role_id'] == 2) {
             // Jika role_id adalah 2 (user), tampilkan view user
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('page/pengguna/pengguna', $data);
+            $this->load->view('page/transaksi/transaksi.php', $data);
             $this->load->view('templates/footer');
         } else {
             // Jika role_id tidak valid, tampilkan pesan error
@@ -37,70 +42,60 @@ class Pengguna extends CI_Controller
         }
     }
 
-   public function ubah() {
-        $data['title'] = 'SPP - Ubah Data Siswa';
+    public function ubah()
+    {
+        $data['title'] = 'SPP - Ubah Data Transaksi';
         $data['admin'] = $this->db->get_where('admin', ['username' =>
         $this->session->userdata('username')])->row_array();
 
 
         $this->load->view('templates/header', $data);
         // $this->load->view('topbar', $data);
-        $this->load->view('page/pengguna/ubah-pengguna', $data);
+        $this->load->view('page/transaksi/edittransaksi', $data);
         $this->load->view('templates/footer');
     }
 
-    public function edit()
-
+   
+    public function add()
     {
-        $data['title'] = 'Zavastock - Data Admin';
+        $data['title'] = 'SPP - Tambah Transaksi';
         $data['admin'] = $this->db->get_where('admin', ['username' =>
         $this->session->userdata('username')])->row_array();
+        $data['options'] = $this->db->get('siswa')->result_array();
+        $data['input'] = $this->db->get('siswa')->result_array();
 
 
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('page/slider/edit_slider', $data);
+        // $this->load->view('topbar', $data);
+        $this->load->view('page/transaksi/tambah', $data);
         $this->load->view('templates/footer');
     }
 
-    public function add()
+
+    public function info()
     {
         $data['title'] = 'BESTI - Tambah Slider';
         $data['admin'] = $this->db->get_where('admin', ['username' =>
         $this->session->userdata('username')])->row_array();
+        // Ambil view PDF
+        $this->load->view('page/transaksi/infotransaksi', $data);
+
+  
+}
+
+
+    public function cetak()
+    {
+        $data['title'] = 'SPP - Cetak Transaksi';
+        $data['admin'] = $this->db->get_where('admin', ['username' =>
+        $this->session->userdata('username')])->row_array();
 
 
         $this->load->view('templates/header', $data);
         // $this->load->view('topbar', $data);
-        $this->load->view('page/pengguna/tambah', $data);
+        $this->load->view('page/transaksi/cetak', $data);
         $this->load->view('templates/footer');
     }
 
-    public function cetak($id)
-    {
-        $this->load->library('pdf');
-        $this->load->model('Transaksi_model'); // Pastikan Anda telah membuat model Transaksi sesuai dengan struktur tabel transaksi
-
-        // Mengambil data transaksi berdasarkan ID
-        $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id);
-
-        // Membuat dokumen PDF
-        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8');
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetTitle('Kwitansi Transaksi');
-        $pdf->SetHeaderData('', '', 'Kwitansi Transaksi', '', '', 30, '', '', '');
-        $pdf->SetMargins(15, 15, 15);
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        $pdf->SetFont('helvetica', '', 12);
-        $pdf->AddPage();
-
-        // Membuat isi kwitansi
-        $html = $this->load->view('kwitansi', $data, true); // Buat view kwitansi
-
-        // Tambahkan isi ke dokumen PDF
-        $pdf->writeHTML($html, true, false, true, false, '');
-
-        // Output dokumen PDF ke browser
-        $pdf->Output('Kwitansi.pdf', 'I');
-    }
+   
 }

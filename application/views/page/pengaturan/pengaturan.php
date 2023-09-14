@@ -1,21 +1,28 @@
 <!-- Begin Page Content -->
 
 <?php
-// Koneksi ke database
-$host = 'localhost';
-$db   = 'bestiedatabase';
-$user = 'root';
-$pass = '';
+include(APPPATH . 'config/database.php');
+
+$host = $db['default']['hostname'];
+$dbname   = $db['default']['database'];
+$username = $db['default']['username'];
+$password = $db['default']['password'];
+
+$koneksi = mysqli_connect($host, $username, $password, $dbname);
+
+if (mysqli_connect_errno()) {
+    die("Koneksi ke database gagal: " . mysqli_connect_error());
+}
 
 
 try {
-    $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
+    $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ];
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO($dsn, $username, $password, $options);
 } catch (PDOException $e) {
     die("Koneksi ke database gagal: " . $e->getMessage());
 }
@@ -40,7 +47,7 @@ while ($row = $stmt->fetch()) {
 
 
 
-<div class="container-fluid">
+<div style="padding:10px;" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -52,7 +59,7 @@ while ($row = $stmt->fetch()) {
     <div class="card">
         <div class="card-header">
             <a href="<?= base_url('Dashboard'); ?>" class="btn bg-secondary"><i class="fas fa-fw fa-arrow-left" style="color: #ffffff;"></i><span style="color: #ffffff; padding-left: 10px;">Kembali</span></a>
-            <a href="<?= base_url('PengaturanWebsite'); ?>" class="btn bg-info"><i class="fas  fa-fw fa-pencil-alt" style="color: #ffffff;"></i><span style="color: #ffffff; padding-left: 10px;"> Pengaturan</span></a>
+            <a href="<?= base_url('Pengaturan/Pengaturanweb'); ?>" class="btn bg-info"><i class="fas  fa-fw fa-pencil-alt" style="color: #ffffff;"></i><span style="color: #ffffff; padding-left: 10px;"> Pengaturan</span></a>
         </div>
 
 
@@ -60,7 +67,7 @@ while ($row = $stmt->fetch()) {
             <div class="form-group">
                 <label>Nama Aplikasi</label>
                 <p>
-                    <strong>BESTI</strong>
+                    <strong>SPP</strong>
                 </p>
             </div>
             <hr>
@@ -74,7 +81,7 @@ while ($row = $stmt->fetch()) {
             <div>
                 <label>Deksripsi Aplikasi</label>
                 <p>
-                    <strong>Aplikasi Konseling dan Edukasi Remaja</strong>
+                    <strong>-</strong>
                 </p>
             </div>
             <hr>
@@ -90,20 +97,28 @@ while ($row = $stmt->fetch()) {
                 <center>
                     <div class="row col col-sm-12">
                         <?php
+                        include(APPPATH . 'config/database.php');
 
-                        $host = 'localhost';
-                        $db   = 'bestiedatabase';
-                        $user = 'root';
-                        $pass = '';
+                        $host = $db['default']['hostname'];
+                        $dbname   = $db['default']['database'];
+                        $username = $db['default']['username'];
+                        $password = $db['default']['password'];
+
+                        $koneksi = mysqli_connect($host, $username, $password, $dbname);
+
+                        if (mysqli_connect_errno()) {
+                            die("Koneksi ke database gagal: " . mysqli_connect_error());
+                        }
+
 
                         try {
-                            $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
+                            $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
                             $options = [
                                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                                 PDO::ATTR_EMULATE_PREPARES => false,
                             ];
-                            $pdo = new PDO($dsn, $user, $pass, $options);
+                            $pdo = new PDO($dsn, $username, $password, $options);
                         } catch (PDOException $e) {
                             die("Koneksi ke database gagal: " . $e->getMessage());
                         }

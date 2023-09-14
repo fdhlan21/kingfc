@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div style="padding:10px;" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -41,17 +41,18 @@
                 $username = $_POST["username"];
                 $password = $_POST["password"];
                 $nama_lengkap = $_POST["nama_lengkap"];
-                $role_id = $_POST["role_id"];
-
+                $role_id  = $_POST ["role_id"];
+                $date_created = time();
+                
                 // Hash password
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                $query = "INSERT INTO admin (username, password, nama_lengkap, role_id) VALUES ('$username', '$hashed_password', '$nama_lengkap', '$role_id')";
+                $query = "INSERT INTO admin (username, password, nama_lengkap, role_id, date_created) VALUES ('$username', '$hashed_password', '$nama_lengkap', '$role_id', '$date_created')";
                 $result = mysqli_query($koneksi, $query);
 
                 if ($result) {
-                    echo "<h3 style='font-family: 'Poppins', sans-serif;'>Admin berhasil ditambahkan.</h3>";
-                    echo "<meta http-equiv=refresh content=1;URL='Login'>";
+                    echo "<h3 style='font-family: 'Poppins', sans-serif;'>Admin baru berhasil ditambahkan ✅</h3>";
+                    echo "<meta http-equiv=refresh content=1;URL='/sekolah/login'>";
                 } else {
                     echo "Gagal menambahkan admin.";
                 }
@@ -79,7 +80,6 @@
                     <label for="role_id">Level</label>
                     <select class="form-control" id="role_id" name="role_id">
                         <option value="1">Admin</option>
-                        <option value="2">User</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>

@@ -11,7 +11,7 @@
     <blockquote class="blockquote text-center" style="margin-top: 5%">
         <p class="mb-0"></p>
             <footer class="blockquote-footer" color: #000 style="color: #fff; font-family: 'Alata', sans-serif; text-align: center;">
-                © PUSKESMAS GEDANGAN.
+                © SEKOLAH
             </footer>
     </blockquote>
 </center>

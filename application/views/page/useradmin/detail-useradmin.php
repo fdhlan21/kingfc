@@ -35,16 +35,16 @@ mysqli_close($koneksi);
 
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div style="padding:10px;" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="<?= base_url('Dashboard'); ?>" style="color: black;">Home</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('UserAdmin'); ?>" style="color: black;">User Admin</a>
+                <a href="<?= base_url('UserAdmin'); ?>" style="color: black;">Admin SPP</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Detail User Admin</li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Admin SPP</li>
         </ol>
     </nav>
     <div class="card">

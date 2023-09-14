@@ -18,16 +18,16 @@ $data = mysqli_fetch_array($sql);
 
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div style="padding:10px;" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="<?= base_url('dashboard'); ?>" style="color: black;">Home</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('useradmin'); ?>" style="color: black;">Admin</a>
+                <a href="<?= base_url('useradmin'); ?>" style="color: black;">Admin SPP</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Admin</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Admin SPP</li>
         </ol>
     </nav>
     <div class="card">
@@ -38,44 +38,44 @@ $data = mysqli_fetch_array($sql);
             </a>
         </div>
         <div class="card-body">
-     <?php
-include(APPPATH . 'config/database.php');
+            <?php
+            include(APPPATH . 'config/database.php');
 
-$host = $db['default']['hostname'];
-$dbname = $db['default']['database'];
-$username = $db['default']['username'];
-$password = $db['default']['password'];
+            $host = $db['default']['hostname'];
+            $dbname = $db['default']['database'];
+            $username = $db['default']['username'];
+            $password = $db['default']['password'];
 
-$koneksi = mysqli_connect($host, $username, $password, $dbname);
+            $koneksi = mysqli_connect($host, $username, $password, $dbname);
 
-if (!$koneksi) {
-    die("Koneksi ke database gagal: " . mysqli_connect_error());
-}
+            if (!$koneksi) {
+                die("Koneksi ke database gagal: " . mysqli_connect_error());
+            }
 
-if (isset($_POST['submit'])) {
-    // Mendapatkan data dari form
-    $id = $_POST['id'];
-    $username = $_POST['username'];
-    $nama_lengkap = $_POST['nama_lengkap'];
-    $role_id = $_POST['role_id'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            if (isset($_POST['submit'])) {
+                // Mendapatkan data dari form
+                $id = $_POST['id'];
+                $username = $_POST['username'];
+                $nama_lengkap = $_POST['nama_lengkap'];
+                $role_id = $_POST['role_id'];
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Query update data
-    $query = "UPDATE admin SET username='$username', nama_lengkap='$nama_lengkap', role_id='$role_id', password='$password' WHERE id=$id";
-    $result = mysqli_query($koneksi, $query);
+                // Query update data
+                $query = "UPDATE admin SET username='$username', nama_lengkap='$nama_lengkap', role_id='$role_id', password='$password' WHERE id=$id";
+                $result = mysqli_query($koneksi, $query);
 
-    // Cek hasil query
-    if ($result) {
-        echo "<h3>Berhasil diubah!</h3>";
-        echo "<meta http-equiv=refresh content=1;URL='login'>";
-    } else {
-        echo '<div class="alert alert-danger">Terjadi kesalahan saat memperbarui data.</div>';
-    }
+                // Cek hasil query
+                if ($result) {
+                    echo "<h3>Berhasil diubah!</h3>";
+                    echo "<meta http-equiv=refresh content=1;URL='login'>";
+                } else {
+                    echo '<div class="alert alert-danger">Terjadi kesalahan saat memperbarui data.</div>';
+                }
 
-    // Tutup koneksi
-  
-}
-?>
+                // Tutup koneksi
+
+            }
+            ?>
 
             <form method="POST" action="">
                 <div class="form-group">

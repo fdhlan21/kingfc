@@ -5,7 +5,7 @@ class Dashboard extends CI_Controller
 {
     public function index()
     {
-        $data['title'] = 'BESTI - Dashboard';
+        $data['title'] = 'SPP - Dashboard';
         $data['admin'] = $this->db->get_where('admin', ['username' =>
         $this->session->userdata('username')])->row_array();
 
@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
         if ($data['admin']['role_id'] == 1) {
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
+            $this->load->view('topbar', $data);
             $this->load->view('page/dashboard/index', $data);
             $this->load->view('templates/footer');
         } elseif ($data['admin']['role_id'] == 2) {
