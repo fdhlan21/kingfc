@@ -123,7 +123,7 @@ $pdo = null;
                                         echo "<td>
                                             <a href=\"javascript:void(0);\" onclick=\"confirmDelete('$id');\" class='btn btn-outline-danger' style='margin-left: 10px;'><i class='fas fa-fw fa-trash'></i></a>
                                             <a href='transaksi/ubah?id=$id' class='btn btn-outline-success' style='margin-left: 10px;'><i class='fas fa-user-edit'></i></a>
-                                            <a href='transaksi/info/?id=$id&action=cetak' class='btn btn-outline-primary' style='margin-left: 10px;'><i class='fas fa-print'></i></a>
+                                            <a href='transaksi/info/?id=$id&action=cetak' class='btn btn-outline-primary' id='cetakButton' style='margin-left: 10px;'><i class='fas fa-print'></i></a>
                                             </td>";
                                     }
 

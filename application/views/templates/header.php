@@ -139,4 +139,18 @@
             }
 
         }
+
+        @media print {
+            @page {
+                size: A5;
+                /* Set ukuran kertas ke A5 */
+                margin: 0;
+                /* Hilangkan margin */
+            }
+
+            body {
+                margin: 0;
+                /* Hilangkan margin pada body */
+            }
+        }
     </style>
