@@ -9,6 +9,7 @@ class login extends CI_Controller
         $this->load->library('form_validation');
     }
 
+
     public function index()
     {
         $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username', [
@@ -30,7 +31,7 @@ class login extends CI_Controller
     public function check_username($username)
     {
         $this->db->where('username', $username);
-        $query = $this->db->get('admin');
+        $query = $this->db->get('memberadmin');
 
         if ($query->num_rows() > 0) {
             return true; // Username terdaftar
@@ -44,7 +45,7 @@ class login extends CI_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        $admin = $this->db->get_where('admin', ['username' => $username])->row_array();
+        $admin = $this->db->get_where('memberadmin', ['username' => $username])->row_array();
 
         if ($admin) {
             // Jika username terdaftar, cek password
@@ -81,8 +82,8 @@ class login extends CI_Controller
     {
 
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[admin.username]', [
-            'is_unique' => 'This username has already been taken!'
+        $this->form_validation->set_rules('email', 'email', 'required|trim|is_unique[memberadmin.email]', [
+            'is_unique' => 'This email has already been taken!'
         ]);
         $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[password]', [
             'min_length' => 'Password too short!',
@@ -90,7 +91,7 @@ class login extends CI_Controller
 
         if ($this->form_validation->run() == false) {
 
-            $data['title'] = 'Admin MAOS Register';
+            $data['title'] = 'KING FC - Register';
             $this->load->view('templates/login_header', $data);
             $this->load->view('page/logindanregister/register');
             $this->load->view('templates/login_footer');
@@ -98,18 +99,17 @@ class login extends CI_Controller
 
             $data = [
                 'username' => htmlspecialchars($this->input->post('username', true)),
-                'nama_lengkap' => htmlspecialchars($this->input->post('nama_lengkap', true)),
+                'nohp' => htmlspecialchars($this->input->post('nohp', true)),
+                'alamat' => htmlspecialchars($this->input->post('alamat', true)),
+                'email' => htmlspecialchars($this->input->post('email', true)),
                 'password' => password_hash(
                     $this->input->post('password'),
                     PASSWORD_DEFAULT
                 ),
                 'role_id' => 1,
-                'is_active' => 1,
-                'date_created' => time()
-
             ];
 
-            $this->db->insert('admin',  $data);
+            $this->db->insert('memberadmin',  $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
 Selamat!, Anda telah berhasil membuat akun.
 </div>');

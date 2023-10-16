@@ -8,10 +8,10 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 <center>
-    <blockquote class="blockquote text-center" style="margin-top: 5%">
+    <blockquote class="blockquote text-center" style="margin-top: -50px;">
         <p class="mb-0"></p>
-            <footer class="blockquote-footer" color: #000 style="color: #fff; font-family: 'Alata', sans-serif; text-align: center;">
-                © SEKOLAH
+            <footer class="blockquote-footer" color: #000 style="color: #000; font-family: 'Alata', sans-serif; text-align: center; font-weight: bold;">
+                © KINGFC
             </footer>
     </blockquote>
 </center>

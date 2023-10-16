@@ -5,8 +5,8 @@
     <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white" style="border-bottom: 5px solid #078718;"">
-            <a href=" <?= base_url('Dashboard'); ?>"><img src="assets/img/icon/logosd.png" height="55px"></a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white" style="border-bottom: 5px solid #4682A9;"">
+            <a href=" <?= base_url('Dashboard'); ?>"><img src="assets/img/icon/kingfc.png" height="55px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -14,12 +14,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class=" navbar-nav navbar-menu">
                     <li></li>
-                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Dashboard') !== false) ? 'active' : ''; ?>" href="<?= base_url('Dashboard'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'Dashboard') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Dashboard</button></a></li>
-                    <li> <a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Pengguna') !== false) ? 'active' : ''; ?>" href="<?= base_url('Pengguna'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'Pengguna') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Siswa</button></a></li>
-                    <li> <a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Transaksi') !== false) ? 'active' : ''; ?>" href="<?= base_url('Transaksi'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'Transaksi') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Transaksi</button></a></li>
-                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Pembukaan') !== false) ? 'active' : ''; ?>" href="<?= base_url('Pembukaan'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'Pembukaan') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Buku Besar</button></a></li>
-                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Pengaturan') !== false) ? 'active' : ''; ?>" href="<?= base_url('Pengaturan'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'Pengaturan') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Pengaturan</button></a></li>
-                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'UserAdmin') !== false) ? 'active' : ''; ?>" href="<?= base_url('UserAdmin'); ?>"> <button type="button" class="btn btn-outline-success <?= (strpos($_SERVER['PHP_SELF'], 'UserAdmin') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Admin</button></a></li>
+                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Dashboard') !== false) ? 'active' : ''; ?>" href="<?= base_url('Dashboard'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'Dashboard') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Home</button></a></li>
+                    <li> <a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Pengguna') !== false) ? 'active' : ''; ?>" href="<?= base_url('Pengguna'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'Pengguna') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Data Member</button></a></li>
+                    <li> <a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Jadwal') !== false) ? 'active' : ''; ?>" href="<?= base_url('Jadwal'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'Jadwal') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Jadwal Main Bola</button></a></li>
+                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Kontak') !== false) ? 'active' : ''; ?>" href="<?= base_url('Kontak'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'Kontak') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Kontak</button></a></li>
+                    <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'Berita') !== false) ? 'active' : ''; ?>" href="<?= base_url('Berita'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'Berita') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Berita</button></a></li>
+                    <?php if ($_SESSION['role_id'] == 1) : ?>
+                        <li><a class="nav-link <?= (strpos($_SERVER['PHP_SELF'], 'UserAdmin') !== false) ? 'active' : ''; ?>" href="<?= base_url('UserAdmin'); ?>"> <button type="button" class="btn btn-outline-primary <?= (strpos($_SERVER['PHP_SELF'], 'UserAdmin') !== false) ? 'active' : ''; ?>" style="font-family: 'Alata',sans-serif;">Admin</button></a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
 
@@ -29,7 +31,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <label>Hallo selamat datang,</label>
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="color: #183A1D; font-family: 'Alata',sans-serif;"><?= $admin['username']; ?></span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="color: #4682A9; font-family: 'Alata',sans-serif;"><?= $memberadmin['username']; ?></span>
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -49,7 +51,7 @@
             .btn-outline-success:hover,
             .btn-outline-success:focus,
             .btn-outline-success.active {
-                background-color: #1CC88A;
+
                 color: white;
             }
         </style>

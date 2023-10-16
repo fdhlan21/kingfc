@@ -1,31 +1,33 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pembukaan extends CI_Controller
+class Berita extends CI_Controller
 {
 
-	function __construct(){
 
-		parent::__construct();
+    function __construct()
+    {
+
+        parent::__construct();
     }
     public function index()
     {
-        $data['title'] = 'SPP - Pembukaan Besar';
-        $data['admin'] = $this->db->get_where('admin', ['username' =>
+        $data['title'] = 'KING FC- Berita';
+        $data['memberadmin'] = $this->db->get_where('memberadmin', ['username' =>
         $this->session->userdata('username')])->row_array();
 
         // Cek role_id pengguna
-        if ($data['admin']['role_id'] == 1) {
+        if ($data['memberadmin']['role_id'] == 1) {
             // Jika role_id adalah 1 (admin), tampilkan view admin
             $this->load->view('templates/header', $data);
             $this->load->view('topbar', $data);
-            $this->load->view('page/pembukaan/pembukaan', $data);
+            $this->load->view('page/berita/berita', $data);
             $this->load->view('templates/footer');
-        } elseif ($data['admin']['role_id'] == 2) {
+        } elseif ($data['memberadmin']['role_id'] == 2) {
             // Jika role_id adalah 2 (user), tampilkan view user
             $this->load->view('templates/header', $data);
             $this->load->view('topbar', $data);
-            $this->load->view('page/slider/slider', $data);
+            $this->load->view('page/berita/berita', $data);
             $this->load->view('templates/footer');
         } else {
             // Jika role_id tidak valid, tampilkan pesan error
@@ -36,35 +38,43 @@ class Pembukaan extends CI_Controller
         }
     }
 
-
-
-    public function add()
+    public function ubah()
     {
-        $data['title'] = 'SPP - Tambah Pembukaan Besar';
-        $data['admin'] = $this->db->get_where('admin', ['username' =>
+        $data['title'] = 'SPP - Ubah Data Siswa';
+        $data['memberadmin'] = $this->db->get_where('memberadmin', ['username' =>
         $this->session->userdata('username')])->row_array();
-        $data['options'] = $this->db->get('siswa')->result_array();
-        $data['options'] = $this->db->get('siswa')->result_array();
-
 
 
         $this->load->view('templates/header', $data);
         // $this->load->view('topbar', $data);
-        $this->load->view('page/pembukaan/add', $data);
+        $this->load->view('page/pengguna/ubah-pengguna', $data);
         $this->load->view('templates/footer');
     }
 
     public function edit()
 
     {
-        $data['title'] = 'SPP - Edit Pembukaan';
-        $data['admin'] = $this->db->get_where('admin', ['username' =>
+        $data['title'] = 'KING FC - Edit Kontak';
+        $data['memberadmin'] = $this->db->get_where('memberadmin', ['username' =>
         $this->session->userdata('username')])->row_array();
 
 
         $this->load->view('templates/header', $data);
         // $this->load->view('topbar', $data);
-        $this->load->view('page/pembukaan/edit', $data);
+        $this->load->view('page/kontak/edit', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add()
+    {
+        $data['title'] = 'BESTI - Tambah Slider';
+        $data['memberadmin'] = $this->db->get_where('memberadmin', ['username' =>
+        $this->session->userdata('username')])->row_array();
+
+
+        $this->load->view('templates/header', $data);
+        // $this->load->view('topbar', $data);
+        $this->load->view('page/berita/tambahberita', $data);
         $this->load->view('templates/footer');
     }
 }

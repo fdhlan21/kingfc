@@ -23,8 +23,6 @@
                 </button> </a>
         </div>
         <div class="card-body">
-
-
             <?php
             // Mengambil konfigurasi koneksi ke database dari file database.php di folder config CodeIgniter
             include(APPPATH . 'config/database.php');
@@ -40,21 +38,34 @@
             }
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nis = $_POST["nis"];
-                $nama = $_POST["nama"];
-                $kelas = $_POST["kelas"];
-                $keterangan = $_POST["keterangan"];
+                $judul = $_POST["judul"];
+                $deskripsi = $_POST["deskripsi"];
 
+                // Memeriksa apakah ada file yang diunggah
+                if (isset($_FILES['gambar'])) {
+                    $gambar = $_FILES['gambar']['name'];
+                    $gambar_temp = $_FILES['gambar']['tmp_name'];
 
+                    // Tentukan path untuk menyimpan gambar
+                    $path = 'path/assets/berita' . $gambar;
 
-                $query = "INSERT INTO siswa (nis, nama, kelas, keterangan) VALUES ('$nis', '$nama', '$kelas', '$keterangan')";
-                $result = mysqli_query($koneksi, $query);
+                    // Pindahkan gambar ke path yang ditentukan
+                    if (move_uploaded_file($gambar_temp, $path)) {
+                        // Gambar berhasil diunggah, selanjutnya Anda bisa menyimpan data ke database
+                        $query = "INSERT INTO berita (judul, deskripsi, gambar) VALUES ('$judul', '$deskripsi', '$path')";
+                        $result = mysqli_query($koneksi, $query);
 
-                if ($result) {
-                    echo "<h3 style='font-family: 'Poppins', sans-serif;'>Siswa berhasil ditambahkan ✅</h3>";
-                    echo "<meta http-equiv=refresh content=1;URL='/sekolah/pengguna'>";
+                        if ($result) {
+                            echo "<h3 style='font-family: 'Poppins', sans-serif;'>Berita berhasil ditambahkan ✅</h3>";
+                            echo "<meta http-equiv=refresh content=1;URL='/sekolah/berita'>";
+                        } else {
+                            echo "Gagal menambahkan Berita ❌";
+                        }
+                    } else {
+                        echo "Gagal mengunggah gambar ❌";
+                    }
                 } else {
-                    echo "Gagal menambahkan Siswa ❌";
+                    echo "Gambar tidak diunggah ❌";
                 }
             }
 
@@ -63,30 +74,25 @@
             ?>
 
 
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="nis">NIS</label>
-                    <input type="text" class="form-control" id="nis" name="nis" required>
-                </div>
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" required>
-                </div>
-                <div class="form-group">
-                    <label for="kelas">Kelas</label>
-                    <input type="text" class="form-control" id="kelas" name="kelas" required>
-                </div>
-                <div class="form-group">
-                    <label for="keterangan">Status</label>
-                    <select class="form-control" name="keterangan" id="keterangan">
-                        <option id="keterangan" value="lunas">Lunas</option>
-                        <option id="keterangan">Belum Lunas</option>
-                    </select>
+                    <label for="judul">Judul</label>
+                    <input type="text" class="form-control" id="judul" name="judul" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
+                </div>
 
-                <button type="submit" class="btn btn-outline-success" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Simpan</button>
+                <div class="form-group">
+                    <label for="gambar">Gambar</label>
+                    <input type="file" class="form-control" id="gambar" name="gambar" required>
+                </div>
+
+                <button type="submit" name="submit" class="btn btn-outline-success">Simpan</button>
             </form>
+
         </div>
     </div>
 </div>

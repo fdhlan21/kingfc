@@ -13,7 +13,7 @@ if (mysqli_connect_errno()) {
     die("Koneksi ke database gagal: " . mysqli_connect_error());
 }
 
-$sql = mysqli_query($koneksi, "select * from memberadmin where id='$_GET[id]'");
+$sql = mysqli_query($koneksi, "select * from kontak where id='$_GET[id]'");
 $data = mysqli_fetch_array($sql);
 
 mysqli_close($koneksi);
@@ -31,19 +31,19 @@ mysqli_close($koneksi);
                 <a href="<?= base_url('dashboard'); ?>" style="color: black;">Home</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('pengguna'); ?>" style="color: black;">Member</a>
+                <a href="<?= base_url('kontak'); ?>" style="color: black;">Kontak</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Member</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Kontak</li>
         </ol>
     </nav>
 
     <div style="padding:10px">
-        <h2 style="font-family:'Poppins', sans-serif">Edit Member</h2>
+        <h2 style="font-family:'Poppins', sans-serif">Edit Kontak</h2>
     </div>
 
     <div class="card">
         <div class="card-header">
-            <a href="<?= base_url('pengguna'); ?>">
+            <a href="<?= base_url('kontak'); ?>">
                 <button type="button" class="btn btn-outline-secondary" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">
                     Kembali
                 </button> </a>
@@ -54,7 +54,7 @@ mysqli_close($koneksi);
             include(APPPATH . 'config/database.php');
 
             $host = $db['default']['hostname'];
-            $dbname   = $db['default']['database'];
+            $dbname = $db['default']['database'];
             $username = $db['default']['username'];
             $password = $db['default']['password'];
 
@@ -67,19 +67,19 @@ mysqli_close($koneksi);
             if (isset($_POST['submit'])) {
                 // Mendapatkan data dari form
                 $id = $_POST['id'];
-                $username = $_POST['username'];
+                $nama = $_POST['nama'];
                 $nohp = $_POST['nohp'];
                 $alamat = $_POST['alamat'];
-              
+
                 // Query update data
-                $query = "UPDATE memberadmin SET username='$username',  nohp='$nohp', alamat='$alamat' WHERE id=$id";
+                $query = "UPDATE kontak SET nama='$nama', nohp='$nohp', alamat='$alamat' WHERE id=$id";
                 $result = mysqli_query($koneksi, $query);
 
                 // Cek hasil query
                 if ($result) {
                     echo "<h2> Data berhasil diubah ✅</h2>";
                     echo "<br>";
-                    echo "<meta http-equiv=refresh content=1;URL='/kingfc/Pengguna'>";
+                    echo "<meta http-equiv=refresh content=1;URL='/kingfc/Kontak'>";
                 } else {
                     echo '<div class="alert alert-danger">Terjadi kesalahan saat memperbarui data ❌</div>';
                 }
@@ -91,9 +91,9 @@ mysqli_close($koneksi);
 
             <form method="POST" action="">
                 <div class="form-group">
-                    <label for="nis">Username</label>
-                    <input class=" form-control form-control-user" type="hidden" name="id" value="<?php echo $data['id'] ?>">
-                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $data['username'] ?>" required>
+                    <label for="nama">Nama</label>
+                    <input class=" form-control form-control-user" type="hidden" id="id" name="id" value="<?php echo $data['id'] ?>">
+                    <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $data['nama'] ?>" required>
                 </div>
 
                 <div class="form-group">

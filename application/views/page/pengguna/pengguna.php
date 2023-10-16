@@ -1,9 +1,9 @@
 <!-- Begin Page Content -->
 
-
 <?php
 // Mengambil konfigurasi koneksi ke database dari file database.php di folder config CodeIgniter
 include(APPPATH . 'config/database.php');
+
 
 $host = $db['default']['hostname'];
 $dbname   = $db['default']['database'];
@@ -22,22 +22,22 @@ try {
     die("Koneksi ke database gagal: " . $e->getMessage());
 }
 
+// Query SQL untuk mengambil data dari tabel jadwalmainbola
+$queryMember = "SELECT id, username, nohp, alamat FROM memberadmin WHERE role_id = 2";
+$stmtMember = $pdo->query($queryMember);
+
 // Query SQL untuk mengambil data dari tabel
 $query = "SELECT * FROM app_data";
 $stmt = $pdo->query($query);
-
 // Fetch data baris per baris
 while ($row = $stmt->fetch()) {
     // Ambil nilai kolom yang diinginkan
-    $color1 = $row['color1'];
-
-    // Lakukan sesuatu dengan nilai yang diambil
-    // ...
+    $color = $row['color3'];
 }
-
 // Menutup koneksi ke database
 $pdo = null;
 ?>
+
 
 
 <div style="padding:10px;" class="container-fluid">
@@ -46,119 +46,81 @@ $pdo = null;
             <li class="breadcrumb-item">
                 <a href="<?= base_url('dashboard'); ?>" style="color: black;">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Siswa</li>
+            <li class="breadcrumb-item active" aria-current="page">Member</li>
         </ol>
     </nav>
+    <div>
+        <h2 style="font-family: 'Poppins', sans-serif; font-weight: 500; text-align: center;">Data Member</h2>
+    </div>
+    <div style="padding:10px; margin-top: 2%">
 
-    <div class="card">
-        <div class="card-header" style="display: flex; gap: 12px;">
-            <a href="<?= base_url('dashboard'); ?>"><button type="button" class="btn btn-outline-secondary" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">Kembali</button></a>
-            <a href="<?= base_url('pengguna/add'); ?>"><button type="button" class="btn btn-outline-success" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 500;">Tambah</button></a>
-        </div>
+        <table style="margin-top:1%;" class="table table-bordered table-striped table-hover tabza dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+                <tr class="" style="color:white; background-color: <?= $color ?>;" role="row">
+                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 21.3281px;">No</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Username: activate to sort column ascending">Nama Lengkap </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Nomor Telepon</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Password: activate to sort column ascending">Alamat</th>
+                    <?php if ($_SESSION['role_id'] == 1) : ?>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Password: activate to sort column ascending">Action</th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Fetch data baris per baris
+                // Fetch data baris per baris
+                $no = 1;
+                while ($row = $stmtMember->fetch()) {
+                    $id = $row['id'];
 
-        <div class=" card-body">
-            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table class="table table-bordered table-striped table-hover tabza dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                            <thead>
-                                <tr class="" style="color:white; background-color: <?= $color1 ?>;" role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 21.3281px;">No</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Nama: activate to sort column ascending">NIS</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Alamat: activate to sort column ascending">Nama</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Kelas</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Tempat Tinggal: activate to sort column ascending">Keterangan</th>
-                                    <?php if ($admin['role_id'] == 1) { ?>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
-                                    <?php } ?>
-                                </tr>
-                            </thead>
+                    // Tampilkan kolom "Nama Lengkap", "Nomor Telepon", dan "Alamat"
+                    echo '<tr role="row" class="odd">';
+                    echo "<td>$no</td>";
+                    echo '<td>' . $row['username'] . '</td>';
+                    echo '<td>' . $row['nohp'] . '</td>';
+                    echo '<td>' . $row['alamat'] . '</td>';
 
-                            <tbody>
-                                <?php
-                                // Mengambil konfigurasi koneksi ke database dari file database.php di folder config CodeIgniter
-                                include(APPPATH . 'config/database.php');
+                    // Tampilkan tombol hapus hanya jika pengguna adalah admin (role_id == 1)
+                    if ($_SESSION['role_id'] == 1) {
+                        echo '<td>';
+                        echo '<a class="btn btn-outline-danger" onclick="confirmDelete(' . $row['id'] . ');"><i class="fas fa-trash"></i> Hapus</a>';
+                        echo '<a class="btn btn-outline-success" href="pengguna/ubah?id=' . $id . '" style="margin-left: 10px;"><i class="fas fa-user-edit"></i> Ubah</a>';
+                        echo '</td>';
+                    }
+                    echo '</tr>';
+                    $no++;
+                }
 
-                                $host = $db['default']['hostname'];
-                                $dbname   = $db['default']['database'];
-                                $username = $db['default']['username'];
-                                $password = $db['default']['password'];
+                ?>
+            </tbody>
 
-                                $koneksi = mysqli_connect($host, $username, $password, $dbname);
+        </table>
 
-                                if (mysqli_connect_errno()) {
-                                    die("Koneksi ke database gagal: " . mysqli_connect_error());
-                                }
-
-                                $no = 1;
-                                $query = "SELECT * FROM siswa ORDER BY id ASC";
-                                $result = mysqli_query($koneksi, $query);
-
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    $id = $row['id'];
-                                    $nis = $row['nis'];
-                                    $nama = $row['nama'];
-                                    $kelas = $row['kelas'];
-                                    $keterangan = $row['keterangan'];
-
-
-
-
-                                    echo "<tr>";
-                                    echo "<td>$no</td>";
-                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$nis</p></td>";
-                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$nama</p></td>";
-                                    echo "<td  style='color: black; font-family:'Poppins', sans-serif;'>$kelas</td>";
-                                    echo "<td><p style='color: black; font-family:'Poppins', sans-serif;'>$keterangan</p></td>";
-
-
-                                    if ($admin['role_id'] == 1) {
-                                        echo "<td>
-                                                        <a href=\"javascript:void(0);\" onclick=\"confirmDelete('$id');\" class='btn btn-outline-danger' style='margin-left: 10px;'><i class='fas fa-fw fa-trash'></i></a>
-                <a href='pengguna/ubah?id=$id' class='btn btn-outline-success' style='margin-left: 10px;'><i class='fas fa-user-edit'></i></a>
-            </td>";
-                                    }
-
-                                    echo "</tr>";
-
-                                    $no++;
-                                }
-
-
-                                ?>
-
-                            </tbody>
-                        </table>
-                        <?php
-                        // Mengambil konfigurasi koneksi ke database dari file database.php di folder config CodeIgniter
-                        include(APPPATH . 'config/database.php');
-
-                        $host = $db['default']['hostname'];
-                        $dbname   = $db['default']['database'];
-                        $username = $db['default']['username'];
-                        $password = $db['default']['password'];
-
-                        $koneksi = mysqli_connect($host, $username, $password, $dbname);
-
-                        if (mysqli_connect_errno()) {
-                            die("Koneksi ke database gagal: " . mysqli_connect_error());
-                        }
-
-                        if (isset($_GET['hapus']) && $admin['role_id'] == 1) {
-                            mysqli_query($koneksi, "DELETE FROM siswa WHERE id='$_GET[hapus]'");
-                            echo "<p style='color: black; font-size:15px;'>Data Terhapus</p>";
-                            echo "<meta http-equiv=refresh content=2;URL='pengguna'>";
-                        }
-
-                        ?>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+<?php
+// Mengambil konfigurasi koneksi ke database dari file database.php di folder config CodeIgniter
+include(APPPATH . 'config/database.php');
 
+$host = $db['default']['hostname'];
+$dbname   = $db['default']['database'];
+$username = $db['default']['username'];
+$password = $db['default']['password'];
+
+$koneksi = mysqli_connect($host, $username, $password, $dbname);
+
+if (mysqli_connect_errno()) {
+    die("Koneksi ke database gagal: " . mysqli_connect_error());
+}
+
+if (isset($_GET['hapus']) && $memberadmin['role_id'] == 1) {
+    mysqli_query($koneksi, "DELETE FROM memberadmin WHERE id='$_GET[hapus]'");
+    echo '<div class="alert alert-success">Member berhasil di hapus ✅</div>';
+    echo "<meta http-equiv=refresh content=1;URL='/kingfc/pengguna'>";
+}
+
+?>
 <script>
     function confirmDelete(id) {
         if (confirm("Anda yakin ingin menghapus data ini?")) {

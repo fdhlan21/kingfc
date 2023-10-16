@@ -153,4 +153,21 @@
                 /* Hilangkan margin pada body */
             }
         }
+
+        .contact-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card .card-img-top {
+            width: auto;
+            height: auto;
+            object-fit: cover;
+            /* Mengatur bagaimana gambar diatur dalam area yang telah ditentukan */
+        }
+
+/* Mengatur margin antara kartu */
+        
     </style>
